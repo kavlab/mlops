@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Установка зависимостей
+pip install -r ./requirements.txt
+
 # генерация данных
 python ./data_creation.py
 
