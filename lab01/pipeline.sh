@@ -4,13 +4,13 @@
 pip install -r ./requirements.txt
 
 # генерация данных
-python ./data_creation.py
+python3 ./data_creation.py
 
 # предобработка данных
-python ./model_preprocessing.py
+python3 ./model_preprocessing.py
 
 # обучение модели
-python ./model_preparation.py
+python3 ./model_preparation.py
 
 # тестирование модели
-python ./model_testing.py
+python3 ./model_testing.py
