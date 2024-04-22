@@ -5,7 +5,7 @@ pipeline {
         stage('Подготовка') {
             steps {
                 script {
-                    sh ''
+                    sh 'pip install -r ./requirements.txt'
                 }
             }
         }
@@ -13,15 +13,15 @@ pipeline {
         stage('Загрузка и обработка данных') {
             steps {
                 script {
-                    sh 'python3 data_preprocessing.py'
+                    sh 'python3 ./data_preprocessing.py'
                 }
             }
         }
 
-        stage('Обработка данных и тренировка модели') {
+        stage('Обучение модели') {
             steps {
                 script {
-                    sh 'python3 model_preparation.py'
+                    sh 'python3 ./model_preparation.py'
                 }
             }
         }
@@ -29,7 +29,7 @@ pipeline {
         stage('Оценка модели') {
             steps {
                 script {
-                    sh 'python3 model_testing.py'
+                    sh 'python3 ./model_testing.py'
                 }
             }
         }
