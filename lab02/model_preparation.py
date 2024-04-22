@@ -14,7 +14,6 @@ MODEL_DIR = "model"
 def main():
     # загружаем данные
     train = pd.read_csv(f"{DATA_DIR}/train.csv")
-    print(train.info())
     target = train[["SalePrice"]]
     train.drop(["SalePrice"], axis=1, inplace=True)
 
@@ -37,7 +36,7 @@ def main():
     # сохраняем модель в файл
     if not os.path.exists(MODEL_DIR):
         os.makedirs(MODEL_DIR)
-    joblib.dump(model, "xgb_model.joblib")
+    joblib.dump(model, f"{MODEL_DIR}/xgb_model.joblib")
 
 
 if __name__ == "__main__":
