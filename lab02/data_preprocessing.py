@@ -4,6 +4,7 @@ import numpy as np
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.compose import ColumnTransformer
+import joblib
 
 
 DATASET_URL = (
@@ -12,6 +13,7 @@ DATASET_URL = (
 RANDOM_STATE = 82
 TEST_SIZE = 0.2
 DATA_DIR = "data"
+MODEL_DIR = "model"
 
 
 def load_dataset() -> pd.DataFrame:
@@ -35,21 +37,21 @@ def main():
     # загружаем набор данных
     df = load_dataset()
 
-    # получем список числовых принаков
+    # получаем список числовых принаков
     num_columns = get_num_columns(df)
     target = "SalePrice"
     scaled_columns = [column for column in num_columns if column != target]
 
-    # выполняем стандартизацию
+    # выполняем стандартизацию, целевую переменную не трогаем
     scaler = StandardScaler()
-    pipeline = ColumnTransformer(
+    transformer = ColumnTransformer(
         [
             ("scale", scaler, scaled_columns),
             ("target", "passthrough", [target]),
         ]
     )
     columns = np.hstack([scaled_columns, [target]])
-    df_scaled = pd.DataFrame(pipeline.fit_transform(df), columns=columns)
+    df_scaled = pd.DataFrame(transformer.fit_transform(df), columns=columns)
     df_scaled.fillna(0, inplace=True)
 
     # делим набор на тренировочную и тестовую выборки
@@ -63,6 +65,11 @@ def main():
 
     train.to_csv(f"{DATA_DIR}/train.csv", index=False)
     test.to_csv(f"{DATA_DIR}/test.csv", index=False)
+
+    # сохраняем ColumnTransformer в файл
+    if not os.path.exists(MODEL_DIR):
+        os.makedirs(MODEL_DIR)
+    joblib.dump(transformer, f"{MODEL_DIR}/transformer.joblib")
 
 
 if __name__ == "__main__":
