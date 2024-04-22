@@ -1,0 +1,42 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Подготовка') {
+            steps {
+                dir('lab02') {
+                    sh '''python3 -m venv .venv
+                    . .venv/bin/activate
+                    pip install -r ./requirements.txt'''
+                }
+            }
+        }
+
+        stage('Загрузка и обработка данных') {
+            steps {
+                dir('lab02') {
+                    sh '''. .venv/bin/activate
+                    python3 ./data_preprocessing.py'''
+                }
+            }
+        }
+
+        stage('Обучение модели') {
+            steps {
+                dir('lab02') {
+                    sh '''. .venv/bin/activate
+                    python3 ./model_preparation.py'''
+                }
+            }
+        }
+
+        stage('Оценка модели') {
+            steps {
+                dir('lab02') {
+                    sh '''. .venv/bin/activate
+                    python3 ./model_testing.py'''
+                }
+            }
+        }
+    }
+}
