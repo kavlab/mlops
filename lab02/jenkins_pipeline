@@ -1,0 +1,37 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Подготовка') {
+            steps {
+                script {
+                    sh ''
+                }
+            }
+        }
+
+        stage('Загрузка и обработка данных') {
+            steps {
+                script {
+                    sh 'python3 data_preprocessing.py'
+                }
+            }
+        }
+
+        stage('Обработка данных и тренировка модели') {
+            steps {
+                script {
+                    sh 'python3 model_preparation.py'
+                }
+            }
+        }
+
+        stage('Оценка модели') {
+            steps {
+                script {
+                    sh 'python3 model_testing.py'
+                }
+            }
+        }
+    }
+}
