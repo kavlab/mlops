@@ -1,8 +1,5 @@
 FROM jenkins/jenkins:lts
 
-# Отключаем первоначальную установку плагинов
-ENV JAVA_OPTS -Djenkins.install.runSetupWizard=false
-
 USER root
 
 # Устанавливаем Python и pip
