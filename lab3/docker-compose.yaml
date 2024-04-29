@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  mlops-lab3-api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    image: mlops-lab3-api:latest
+    container_name: mlops-lab3-api
+    restart: unless-stopped
+    working_dir: /app
+    networks:
+      - network-mlops-lab3
+    ports:
+      - "8500:8080"
+
+  mlops-lab3-ui:
+    build:
+      context: ./ui
+      dockerfile: Dockerfile
+    image: mlops-lab3-ui:latest
+    container_name: mlops-lab3-ui
+    restart: unless-stopped
+    env_file:
+      - ./ui/default.env
+    working_dir: /app
+    networks:
+      - network-mlops-lab3
+    ports:
+      - "8501:8501"
+
+networks:
+  network-mlops-lab3:
