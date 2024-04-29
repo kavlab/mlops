@@ -1,9 +1,9 @@
 import os
+
+import joblib
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from xgboost import XGBRegressor
-import joblib
-
 
 RANDOM_STATE = 82
 TEST_SIZE = 0.2

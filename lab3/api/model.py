@@ -1,8 +1,7 @@
-import pandas as pd
-from sklearn.metrics import r2_score
 import joblib
+import pandas as pd
 from api_model import InputData
-
+from sklearn.metrics import r2_score
 
 DATA_DIR = "data"
 MODEL_DIR = "model"
@@ -36,6 +35,7 @@ def predict_price(data: InputData) -> int:
 
     df = pd.DataFrame([data.model_dump()])
 
+    # предобработка данных
     df_transformed = pipeline.transform(df)
 
     # предсказание цены на новых данных
