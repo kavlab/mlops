@@ -59,7 +59,7 @@ def model_testing():
 
 def predict_price():
     data = {}
-    for feature in get_features:
+    for feature in get_features():
         data[feature] = st.session_state.get(feature)
     response = requests.post(f'{API_URL}/predict', json=data)
     if response.status_code == 200:
@@ -75,7 +75,7 @@ def ui():
     if st.button(label='Выполнить оценку модели'):
         model_testing()
 
-    for feature in get_features:
+    for feature in get_features():
         st.number_input(
             label=feature,
             value=0,
