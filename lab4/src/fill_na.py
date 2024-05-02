@@ -1,6 +1,5 @@
 import pandas as pd
 
-
 DATASET = '../datasets/house_prices_train.csv'
 
 
@@ -49,7 +48,7 @@ def main():
     df = pd.read_csv(DATASET)
 
     num_columns = get_num_columns()
-    values = dict([(column, 0) for column in num_columns])
+    values = dict([(column, df[column].mean()) for column in num_columns])
     df = df.fillna(value=values)
 
     df.to_csv(DATASET, index=False)
