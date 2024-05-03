@@ -67,7 +67,7 @@ Dataset 3: R2 = 0.870
 
 ## Модуль 3
 
-Все материалы второго задания находятся в каталоге [lab3](lab3)
+Все материалы третьего задания находятся в каталоге [lab3](lab3)
 
 В подкаталоге `api` расположены файлы сервиса реализующего API для предсказания цены дома.
 В этом же каталоге расположен файл `Dockerfile` для построения образа микросервиса с API.
@@ -81,3 +81,60 @@ Dataset 3: R2 = 0.870
 ```
 docker compose up --build
 ```
+
+## Модуль 4
+
+Все материалы четвертого задания находятся в каталоге [lab4](lab4)
+
+В каталоге `src` находятся скрипты для загрузки и обработки данных:
+- `data_loader.py` - загружает датасет и сохраняет файл `house_prices_train.csv` в каталоге `datasets`;
+- `fill_na.py` - читает датасет из файла, заменяет пропущенные значения в числовых признаках на средние значения и сохраняет результаты в тот же файл;
+- `fill_na_categorical.py` - читает датасет из файла, заменяет пропущенные значения в категориальных признаках на чаще всего встречающиеся значения, после этого сохраняет результаты в тот же файл;
+- `one_hot.py` - читает датасет из файла, выполняет One Hot кодирование признака `MSZoning`, сохраняет результаты в тот же файл.
+
+После загрузки датасета для обработки сначала выполнялся скрипт `fill_na.py`. В первой версии этого скрипта пропущенные значения заменялись нулями (коммит a2bf99a).
+
+После этого была произведена замена в категориальных признаках (коммит 9bcceb2).
+
+Скрипт `fill_na.py` был изменен для замены на средние значения.
+Для того, чтобы вернуть первоначальное состояние датасета, был использован DVC.
+Для этого использовались следующие команды:
+```
+git checkout cfd510e
+dvc pull
+```
+
+Возврат к последней версии скрипта `fill_na.py` и запуск скриптов по заполнению пропущенных значений:
+```
+git checkout lab4
+python3 fill_na.py
+python3 fill_na_categorical.py
+```
+
+Далее коммиты git c6425fd, c3f5527 и коммит и push dvc:
+```
+dvc commit
+dvc push -r gdrive
+```
+
+В качестве удаленного хранилища файлов использовался Google Drive. Ссылка на каталог с датасетами: [datasets](https://drive.google.com/drive/folders/1XVegteuM7M4zqKpqlCu-MwUTsKV2eyP_?usp=sharing).
+
+Коммиты по этому заданию:
+
+```
+9222816 (HEAD -> lab4, origin/lab4) one hot encoding MSZoning
+63300ad add one hot encoding script
+c3f5527 fill NA in categorical columns with most frequently values
+c6425fd fill NA in number columns with median
+cfdcf25 fix fill_na script
+9bcceb2 fill NA in categorical columns
+2e5a01d add fill NA in categorical features
+a2bf99a fill NA in number columns
+962c55b add fill na script
+cfd510e add gdrive
+5a439d7 put dataset under control
+867987d add data loader script
+93f5ddd add dvc
+```
+
+Файл [datasets.dvc](lab4/datasets.dvc) для отслеживания версий находится в каталоге lab4.
