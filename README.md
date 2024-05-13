@@ -113,7 +113,7 @@ python3 fill_na_categorical.py
 
 Далее коммиты git c6425fd, c3f5527 и коммит и push dvc:
 ```
-dvc commit
+git commit -m "..."
 dvc push -r gdrive
 ```
 
